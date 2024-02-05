@@ -9,8 +9,8 @@ pipeline {
         docker { image 'node:18-alpine' }  
       }
       steps {
-        sh 'echo npm install' 
-        sh 'echo npm run build' 
+        sh 'echo yarn install' 
+        sh 'echo yarn build' 
       }
     }
 
