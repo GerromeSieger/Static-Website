@@ -9,7 +9,7 @@ pipeline {
         docker { image 'node:18-alpine' }  
       }
       steps {
-        sh 'echo yarn install' 
+        sh 'echo yarn installm' 
         sh 'echo yarn build' 
       }
     }
