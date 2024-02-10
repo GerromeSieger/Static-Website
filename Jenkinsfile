@@ -1,13 +1,11 @@
 pipeline {
-  agent { node 'node1' } 
+  agent any
   triggers {
     githubPush()
   }
   stages {
     stage('Build') { 
-      agent {
-        docker { image 'node:18-alpine' }  
-      }
+      agent any
       steps {
         sh 'echo yarn installm' 
         sh 'echo yarn build' 
@@ -15,9 +13,7 @@ pipeline {
     }
 
     stage('Test') {
-      agent { 
-        docker { image 'python:3.7-alpine' }  
-      }
+      agent any
       steps {
         sh 'echo pip install -r requirements.txt'
         sh 'echo pytest tests/'
@@ -27,8 +23,16 @@ pipeline {
     stage('Deploy') {
       agent any 
       steps {
-        sh 'echo ansible-playbook playbooks/deploy.yml'  
-      }
+        withCredentials([sshUserPrivateKey(credentialsId: 'remote-server-cred', keyFileVariable: 'SSH_PRIVATE_KEY', usernameVariable: 'REMOTE_USER')]) {
+          script {
+            sshCommand remote: [
+              host: '34.203.205.58',
+              user: env.REMOTE_USER,
+              keyFile: env.SSH_PRIVATE_KEY
+            ], command: 'sudo apt update'
+          }
+        }
     }
   }
+}
 }
