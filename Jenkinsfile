@@ -11,11 +11,11 @@ pipeline {
         steps{
             withCredentials([sshUserPrivateKey(credentialsId: 'remote-server-cred', keyFileVariable: 'SSH_PRIVATE_KEY', usernameVariable: 'REMOTE_USER')]) {
             sh """
-            ssh -o StrictHostKeyChecking=no -i ${SSH_PRIVATE_KEY} ${REMOTE_USER}@${IP_CRED} <<EOF
-            whoami
+            ssh -o StrictHostKeyChecking=no -i ${SSH_PRIVATE_KEY} ${REMOTE_USER}@${IP_CRED} '
+            sudo apt update
             pwd
             ls -al
-           EOF
+           '
             """
             }
         }
