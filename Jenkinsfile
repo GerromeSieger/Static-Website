@@ -12,8 +12,8 @@ pipeline {
             sshCommand remote: [
               name: 'ec2server',
               host: '34.203.205.58',
-              user: REMOTE_USER,
-              identiyFile: SSH_PRIVATE_KEY,
+              user: env.REMOTE_USER,
+              identiyFile: env.SSH_PRIVATE_KEY,
               allowAnyHosts: true
             ], command: "whoami"
           }
