@@ -4,22 +4,6 @@ pipeline {
     githubPush()
   }
   stages {
-    stage('Build') { 
-      agent any
-      steps {
-        sh 'echo yarn installm' 
-        sh 'echo yarn build' 
-      }
-    }
-
-    stage('Test') {
-      agent any
-      steps {
-        sh 'echo pip install -r requirements.txt'
-        sh 'echo pytest tests/'
-      }
-    }
-
     stage('Deploy') {
       agent any 
       steps {
@@ -29,7 +13,8 @@ pipeline {
               name: 'ec2server',
               host: '34.203.205.58',
               user: env.REMOTE_USER,
-              keyFile: env.SSH_PRIVATE_KEY
+              keyFile: env.SSH_PRIVATE_KEY,
+              allowAnyHosts = true
             ], command: 'sudo apt update'
           }
         }
