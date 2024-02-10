@@ -14,7 +14,7 @@ pipeline {
               host: '34.203.205.58',
               user: env.REMOTE_USER,
               keyFile: env.SSH_PRIVATE_KEY,
-              allowAnyHosts = true
+              allowAnyHosts: true
             ], command: 'sudo apt update'
           }
         }
