@@ -13,7 +13,7 @@ pipeline {
               name: 'ec2server',
               host: '54.147.13.163',
               user: 'ubuntu',
-              identiy: ${SSH_PRIVATE_KEY},
+              identiy: SSH_PRIVATE_KEY,
               allowAnyHosts: true
             ], command: "whoami"
           }
