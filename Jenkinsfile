@@ -1,34 +1,24 @@
 pipeline {
-  agent none 
+  agent any
+  environment {
+    IP_CRED = credentials('ssh-key') 
+  }  
   triggers {
     githubPush()
   }
   stages {
-    stage('Build') { 
-      agent {
-        docker { image 'node:18-alpine' }  
-      }
-      steps {
-        sh 'echo yarn install' 
-        sh 'echo yarn build' 
-      }
+    stage ('Deploy') {
+        steps{
+            withCredentials([sshUserPrivateKey(credentialsId: 'remote-server-cred', keyFileVariable: 'SSH_PRIVATE_KEY', usernameVariable: 'REMOTE_USER')]) {
+            sh """
+            ssh -o StrictHostKeyChecking=no -i ${SSH_PRIVATE_KEY} ${REMOTE_USER}@${IP_CRED} '
+            sudo apt update
+            pwd
+            ls -al
+           '
+            """
+            }
+        }
     }
-
-    stage('Test') {
-      agent { 
-        docker { image 'python:3.7-alpine' }  
-      }
-      steps {
-        sh 'echo pip install -r requirements.txt'
-        sh 'echo pytest tests/'
-      }
-    }
-
-    stage('Deploy') {
-      agent any 
-      steps {
-        sh 'echo ansible-playbook playbooks/deploy.yml'  
-      }
-    }
-  }
+}
 }
