@@ -13,7 +13,7 @@ pipeline {
               name: 'ec2server',
               host: '34.203.205.58',
               user: 'ubuntu',
-              identiyFile: '-----BEGIN RSA PRIVATE KEY-----
+              identiy: '-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAswNZnkQ6GgXkVFehhYMOHbdGdIq8gMR3RabWWcm5JTfo0md6
 xgO3rciWC837yFzCkxwFLhhyjg7ZS4+jfcv3FJ/bRv9381MTVQ4HiV3/9GkOG9n4
 SZU4hIT/YAy9WSB2MTpsTfcWWKHV/HGzGfOvk38p5mm7wT5iTKWsV9yS3omXFEC1
