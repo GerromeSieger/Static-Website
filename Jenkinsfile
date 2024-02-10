@@ -15,7 +15,7 @@ pipeline {
               user: env.REMOTE_USER,
               keyFile: env.SSH_PRIVATE_KEY,
               allowAnyHosts: true
-            ], command: 'sudo apt update'
+            ], command: "whoami"
           }
         }
     }
