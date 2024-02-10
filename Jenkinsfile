@@ -6,8 +6,8 @@ pipeline {
   stages {
     stage ('Deploy') {
         steps{
-            sshagent(credentials : ['ssh-key']) {
-                sh 'ssh -o StrictHostKeyChecking=no ubuntu@54.147.13.163 "whoami"'
+            withCredentials([sshUserPrivateKey(credentialsId: 'remote-server-cred', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                sh 'ssh -o StrictHostKeyChecking=no -i ${SSH_PRIVATE_KEY} ubuntu@54.147.13.163 "whoami"'
             }
         }
     }
